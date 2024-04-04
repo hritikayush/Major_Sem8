@@ -2,7 +2,6 @@ const path = require('path');
 const fs = require('fs');
 const solc = require('solc');
 
-// Read the Solidity source file
 const contractPath = path.resolve(__dirname, 'Main.sol');
 const source = fs.readFileSync(contractPath, 'utf8');
 
@@ -24,7 +23,6 @@ const input = {
 
 const output = JSON.parse(solc.compile(JSON.stringify(input)));
 
-// Output errors, if any
 if (output.errors) {
     output.errors.forEach(err => {
         console.error(err.formattedMessage);
@@ -32,9 +30,8 @@ if (output.errors) {
     process.exit(1);
 }
 
-// Write compiled contracts to the 'build' directory
 const buildPath = path.resolve(__dirname, 'build');
-fs.mkdirSync(buildPath, { recursive: true }); // Create directory recursively
+fs.mkdirSync(buildPath, { recursive: true }); 
 
 for (let contractName in output.contracts['Main.sol']) {
     const contractData = output.contracts['Main.sol'][contractName];
